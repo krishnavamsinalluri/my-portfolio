@@ -18,7 +18,7 @@ export default function About() {
               <p style={{ marginTop: '15px' }}>Passionate about writing clean, scalable code and creating seamless user experiences that drive business value.</p>
               <div className="about-info">
                 <ul>
-                  <li><strong>Name:</strong> Krishna Vamsi</li>
+                  <li><strong>Name:</strong> Krishna Vamsi  </li>
                   <li><strong>Date of Birth:</strong> 12 August 2001</li>
                   <li><strong>Address:</strong> West Godavari Dist, Andhra Pradesh</li>
                   <li><strong>Email:</strong> vamsinalluri806@gmail.com</li>
