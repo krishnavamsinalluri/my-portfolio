@@ -1,7 +1,31 @@
 const education = [
-  { years: '2019 - 2023', degree: 'B.Tech (Civil Engineering)', institution: 'JNTUK, Sasi Institute of Technology & Engineering', grade: 'CGPA: 6.2' },
-  { years: '2017 - 2019', degree: 'Intermediate', institution: 'Narayana Junior College', grade: 'CGPA: 7.6' },
-  { years: '2016', degree: 'SSC', institution: 'Manasa English Medium High School', grade: 'CGPA: 7.5' },
+  {
+    years: '2019 – 2023',
+    degree: 'B.Tech – Civil Engineering',
+    institution: 'JNTUK, Sasi Institute of Technology & Engineering',
+    grade: 'CGPA: 6.2',
+  },
+  {
+    years: '2017 – 2019',
+    degree: 'Intermediate (MPC)',
+    institution: 'Narayana Junior College',
+    grade: 'CGPA: 7.6',
+  },
+  {
+    years: '2016',
+    degree: 'SSC',
+    institution: 'Manasa English Medium High School',
+    grade: 'CGPA: 7.5',
+  },
+];
+
+const certifications = [
+  {
+    title: 'ChatGPT for Everyone – Learn Prompting',
+    issuer: 'Online Certification',
+    date: 'April 2024',
+    id: 'ut1yxkaefd',
+  },
 ];
 
 export default function Education() {
@@ -28,12 +52,15 @@ export default function Education() {
             </div>
           ))}
         </div>
+
         <div className="certification-wrap mt-5">
           <h3>Certifications</h3>
-          <div className="cert-item">
-            <h4>ChatGPT for Everyone - Learn Prompting</h4>
-            <p>Issued: April 3, 2026 | ID: ut1yxkaefd</p>
-          </div>
+          {certifications.map(({ title, issuer, date, id }) => (
+            <div className="cert-item" key={id}>
+              <h4>{title}</h4>
+              <p>{issuer} &nbsp;|&nbsp; {date} &nbsp;|&nbsp; ID: {id}</p>
+            </div>
+          ))}
         </div>
       </div>
     </section>

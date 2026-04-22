@@ -3,15 +3,15 @@ const projects = [
     img: '/assets/images/hrms.png',
     title: 'HR Management System',
     tech: 'Angular · .NET · PrimeNG',
-    desc: 'Automated HR operations including attendance, payroll, and document management.',
+    desc: 'Automated HR operations including attendance, payroll, leave management, and document management with role-based access control.',
     icon: 'fas fa-users-cog',
-    color: '#4f46e5',
+    color: '#6c5ce7',
   },
   {
     img: '/assets/images/valam.png',
     title: 'Valam (Ride-Hailing)',
-    tech: 'Angular · Google Maps API · Firebase .Java',
-    desc: 'Real-time booking and tracking system for bike and car rides.',
+    tech: 'Angular · Google Maps API · Firebase · Java',
+    desc: 'Real-time ride booking and live tracking system for bike and car rides with driver-rider matching.',
     icon: 'fas fa-car',
     color: '#0ea5e9',
   },
@@ -19,7 +19,7 @@ const projects = [
     img: '/assets/images/ecommerce.png',
     title: 'E-commerce Application',
     tech: 'React.js · Redux · Axios',
-    desc: 'Dynamic product listing, cart management, and secure checkout flows.',
+    desc: 'Dynamic product listing, cart management, wishlist, and secure checkout flows with REST API integration.',
     icon: 'fas fa-shopping-bag',
     color: '#f59e0b',
   },
@@ -42,14 +42,14 @@ export default function Projects() {
             <div className="project-card" key={title}>
               <div className="project-img-wrap">
                 <img src={img} alt={title} />
-                <div className="project-overlay">
-                  <div className="project-icon" style={{ background: color }}>
-                    <i className={icon}></i>
-                  </div>
-                </div>
               </div>
               <div className="project-body">
-                <h3>{title}</h3>
+                <div className="project-title-row">
+                  <div className="project-icon" style={{ background: `${color}18`, color }}>
+                    <i className={icon}></i>
+                  </div>
+                  <h3>{title}</h3>
+                </div>
                 <span className="tech-tag">{tech}</span>
                 <p>{desc}</p>
               </div>
