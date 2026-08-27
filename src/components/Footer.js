@@ -1,14 +1,14 @@
 import { NavLink } from 'react-router-dom';
 
 const navLinks = [
-  { label: 'Home',       path: '/' },
-  { label: 'About',      path: '/about' },
-  { label: 'Expertise',  path: '/expertise' },
-  { label: 'Skills',     path: '/skills' },
-  { label: 'Experience', path: '/experience' },
-  { label: 'Projects',   path: '/projects' },
-  { label: 'Education',  path: '/education' },
-  { label: 'Contact',    path: '/contact' },
+  { label: 'Home',       path: '/',          targetId: 'home' },
+  { label: 'About',      path: '/about',     targetId: 'about' },
+  { label: 'Expertise',  path: '/expertise', targetId: 'expertise' },
+  { label: 'Skills',     path: '/skills',    targetId: 'skills' },
+  { label: 'Experience', path: '/experience',targetId: 'experience' },
+  { label: 'Projects',   path: '/projects',  targetId: 'projects' },
+  { label: 'Education',  path: '/education', targetId: 'education' },
+  { label: 'Contact',    path: '/contact',   targetId: 'contact' },
 ];
 
 const socials = [
@@ -18,6 +18,17 @@ const socials = [
 ];
 
 export default function Footer() {
+  const handleNavClick = (e, targetId, path) => {
+    const element = document.getElementById(targetId);
+    if (element) {
+      e.preventDefault();
+      const yOffset = -70;
+      const y = element.getBoundingClientRect().top + window.pageYOffset + yOffset;
+      window.scrollTo({ top: y, behavior: 'smooth' });
+      window.history.pushState(null, '', path);
+    }
+  };
+
   return (
     <footer className="footer">
       <div className="footer-top">
@@ -26,9 +37,11 @@ export default function Footer() {
 
             {/* Brand */}
             <div className="footer-brand-col">
-              <NavLink to="/" className="footer-logo">Krishna <span>Vamsi</span></NavLink>
+              <NavLink to="/" className="footer-logo" onClick={(e) => handleNavClick(e, 'home', '/')}>
+                Krishna <span>Vamsi</span>
+              </NavLink>
               <p className="footer-bio">
-                Software Engineer specializing in Angular, React &amp; TypeScript. Building clean, scalable web experiences.
+                Software Engineer specializing in Angular, React.js, Next.js &amp; TypeScript. Building clean, scalable web experiences.
               </p>
               <div className="footer-socials">
                 {socials.map(({ icon, href, label }) => (
@@ -43,9 +56,9 @@ export default function Footer() {
             <div className="footer-links-col">
               <h4 className="footer-col-title">Quick Links</h4>
               <ul className="footer-nav">
-                {navLinks.map(({ label, path }) => (
+                {navLinks.map(({ label, path, targetId }) => (
                   <li key={path}>
-                    <NavLink to={path} end={path === '/'}>{label}</NavLink>
+                    <a href={path} onClick={(e) => handleNavClick(e, targetId, path)}>{label}</a>
                   </li>
                 ))}
               </ul>
@@ -57,7 +70,7 @@ export default function Footer() {
               <ul className="footer-contact-list">
                 <li>
                   <i className="fas fa-map-marker-alt"></i>
-                  <span>West Godavari Dist, Andhra Pradesh</span>
+                  <span>Hyderabad, India</span>
                 </li>
                 <li>
                   <i className="fas fa-envelope"></i>

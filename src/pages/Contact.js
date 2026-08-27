@@ -54,7 +54,7 @@ export default function Contact() {
   };
 
   const infoCards = [
-    { icon: 'fas fa-map-marker-alt', label: 'Location', value: 'West Godavari Dist, Andhra Pradesh', href: null },
+    { icon: 'fas fa-map-marker-alt', label: 'Location', value: 'Hyderabad, India', href: null },
     { icon: 'fas fa-envelope',       label: 'Email',    value: 'vamsinalluri806@gmail.com',          href: 'mailto:vamsinalluri806@gmail.com' },
     { icon: 'fas fa-phone',          label: 'Phone',    value: '+91 9573660370',                     href: 'tel:+919573660370' },
   ];
@@ -100,7 +100,7 @@ export default function Contact() {
               </div>
 
               <div className="contact-socials">
-                <p>Find me on</p>
+                <p className="contact-socials-title">Find me on</p>
                 <div className="contact-social-links">
                   {socials.map(({ icon, href, label }) => (
                     <a key={label} href={href} target="_blank" rel="noreferrer" title={label} className="contact-social-btn">
@@ -124,10 +124,9 @@ export default function Contact() {
                       onChange={handleChange}
                       onFocus={() => setFocused('from_name')}
                       onBlur={() => setFocused('')}
+                      placeholder="Your Name *"
                       required
                     />
-                    <label>Your Name <span>*</span></label>
-                    <div className="input-line"></div>
                   </div>
                   <div className={`float-group ${focused === 'from_email' || form.from_email ? 'active' : ''}`}>
                     <input
@@ -135,10 +134,9 @@ export default function Contact() {
                       onChange={handleChange}
                       onFocus={() => setFocused('from_email')}
                       onBlur={() => setFocused('')}
+                      placeholder="Your Email *"
                       required
                     />
-                    <label>Your Email <span>*</span></label>
-                    <div className="input-line"></div>
                   </div>
                 </div>
                 <div className={`float-group ${focused === 'subject' || form.subject ? 'active' : ''}`}>
@@ -147,9 +145,8 @@ export default function Contact() {
                     onChange={handleChange}
                     onFocus={() => setFocused('subject')}
                     onBlur={() => setFocused('')}
+                    placeholder="Subject"
                   />
-                  <label>Subject</label>
-                  <div className="input-line"></div>
                 </div>
                 <div className={`float-group ${focused === 'message' || form.message ? 'active' : ''}`}>
                   <textarea
@@ -157,10 +154,9 @@ export default function Contact() {
                     onChange={handleChange}
                     onFocus={() => setFocused('message')}
                     onBlur={() => setFocused('')}
+                    placeholder="Your Message *"
                     required
                   ></textarea>
-                  <label>Your Message <span>*</span></label>
-                  <div className="input-line"></div>
                 </div>
 
                 {status && (
@@ -178,7 +174,7 @@ export default function Contact() {
             </div>
           </div>
 
-     </div>
+        </div>
       </div>
     </section>
   );
