@@ -1,11 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import About from './About';
-import Expertise from './Expertise';
-import Skills from './Skills';
-import Experience from './Experience';
-import Projects from './Projects';
-import Education from './Education';
-import Contact from './Contact';
+import { Link } from 'react-router-dom';
 
 const statsData = [
   { target: 2, suffix: '+', label: 'Years Experience' },
@@ -43,7 +37,6 @@ export default function Home() {
         const animate = (currentTime) => {
           const elapsedTime = currentTime - startTime;
           const progress = Math.min(elapsedTime / duration, 1);
-          // Ease out cubic function for smooth decelerating count
           const easeProgress = 1 - Math.pow(1 - progress, 3);
 
           setCounts(
@@ -77,16 +70,6 @@ export default function Home() {
     return () => observer.disconnect();
   }, [hasAnimatedStats]);
 
-  const scrollToContact = (e) => {
-    e.preventDefault();
-    const contactEl = document.getElementById('contact');
-    if (contactEl) {
-      const yOffset = -70;
-      const y = contactEl.getBoundingClientRect().top + window.pageYOffset + yOffset;
-      window.scrollTo({ top: y, behavior: 'smooth' });
-    }
-  };
-
   return (
     <>
       <section className="static-hero" id="home">
@@ -107,7 +90,7 @@ export default function Home() {
                   <a href="/assets/pdf/Krishna_Vamsi_Resume.pdf" className="theme-btn" download>
                     Download CV
                   </a>
-                  <a href="#contact" onClick={scrollToContact} className="theme-btn-s2">Hire Me</a>
+                  <Link to="/contact" className="theme-btn-s2">Hire Me</Link>
                 </div>
                 <div className="hero-socials">
                   <a href="https://www.linkedin.com/in/krishna-vamsi-503986249" target="_blank" rel="noreferrer" title="LinkedIn">
@@ -161,15 +144,6 @@ export default function Home() {
           </div>
         </div>
       </section>
-
-      {/* Render all sections in sequence for seamless single-page scrolling */}
-      <About />
-      <Expertise />
-      <Skills />
-      <Experience />
-      <Projects />
-      <Education />
-      <Contact />
     </>
   );
 }

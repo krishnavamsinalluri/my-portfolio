@@ -1,14 +1,14 @@
 import { NavLink } from 'react-router-dom';
 
 const navLinks = [
-  { label: 'Home',       path: '/',          targetId: 'home' },
-  { label: 'About',      path: '/about',     targetId: 'about' },
-  { label: 'Expertise',  path: '/expertise', targetId: 'expertise' },
-  { label: 'Skills',     path: '/skills',    targetId: 'skills' },
-  { label: 'Experience', path: '/experience',targetId: 'experience' },
-  { label: 'Projects',   path: '/projects',  targetId: 'projects' },
-  { label: 'Education',  path: '/education', targetId: 'education' },
-  { label: 'Contact',    path: '/contact',   targetId: 'contact' },
+  { label: 'Home',       path: '/' },
+  { label: 'About',      path: '/about' },
+  { label: 'Expertise',  path: '/expertise' },
+  { label: 'Skills',     path: '/skills' },
+  { label: 'Experience', path: '/experience' },
+  { label: 'Projects',   path: '/projects' },
+  { label: 'Education',  path: '/education' },
+  { label: 'Contact',    path: '/contact' },
 ];
 
 const socials = [
@@ -18,17 +18,6 @@ const socials = [
 ];
 
 export default function Footer() {
-  const handleNavClick = (e, targetId, path) => {
-    const element = document.getElementById(targetId);
-    if (element) {
-      e.preventDefault();
-      const yOffset = -70;
-      const y = element.getBoundingClientRect().top + window.pageYOffset + yOffset;
-      window.scrollTo({ top: y, behavior: 'smooth' });
-      window.history.pushState(null, '', path);
-    }
-  };
-
   return (
     <footer className="footer">
       <div className="footer-top">
@@ -37,7 +26,7 @@ export default function Footer() {
 
             {/* Brand */}
             <div className="footer-brand-col">
-              <NavLink to="/" className="footer-logo" onClick={(e) => handleNavClick(e, 'home', '/')}>
+              <NavLink to="/" className="footer-logo">
                 Krishna <span>Vamsi</span>
               </NavLink>
               <p className="footer-bio">
@@ -56,9 +45,9 @@ export default function Footer() {
             <div className="footer-links-col">
               <h4 className="footer-col-title">Quick Links</h4>
               <ul className="footer-nav">
-                {navLinks.map(({ label, path, targetId }) => (
+                {navLinks.map(({ label, path }) => (
                   <li key={path}>
-                    <a href={path} onClick={(e) => handleNavClick(e, targetId, path)}>{label}</a>
+                    <NavLink to={path} end={path === '/'}>{label}</NavLink>
                   </li>
                 ))}
               </ul>
