@@ -25,16 +25,19 @@ export default function About() {
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
           >
-            <img 
-              src="/assets/images/Hero-image.jpeg" 
-              alt="Krishna Vamsi"
-              onError={(e) => {
-                e.target.src = '/assets/images/PROFILE-PHOTO.jpeg';
-              }}
-            />
+            <div className="about-image-wrapper">
+              <img 
+                src="/assets/images/Hero-image.jpeg" 
+                alt="Krishna Vamsi"
+                onError={(e) => {
+                  e.target.src = '/assets/images/PROFILE-PHOTO.jpeg';
+                }}
+              />
+              <div className="about-image-overlay"></div>
+            </div>
             <div className="about-experience-badge">
               <h3>2+</h3>
-              <p>Years Experience<br /><span style={{ color: 'var(--accent-violet-light)' }}>Software Engineering</span></p>
+              <p>Years Experience<br /><span style={{ color: 'var(--accent-violet)' }}>Software Engineering</span></p>
             </div>
           </motion.div>
 
@@ -51,7 +54,7 @@ export default function About() {
             </div>
 
             <p style={{ fontSize: '15px', color: 'var(--text-secondary)', lineHeight: '1.7', marginBottom: '14px' }}>
-              Software Engineer with 2+ years of experience engineering enterprise HR platforms, ride-hailing applications, and corporate websites across Angular, React, Next.js, and TypeScript.
+              Software Engineer with 2+ years of experience engineering enterprise HR platforms, ride-hailing applications, and corporate websites across Angular, React, Next.js, TypeScript, .NET, and SQL.
             </p>
             <p style={{ fontSize: '14px', color: 'var(--text-muted)', lineHeight: '1.6' }}>
               Transitioned into software engineering from a Civil Engineering background (B.Tech JNTUK SITE) through dedicated self-upskilling and hands-on production application development. Skilled in Figma-to-UI conversion, REST API integration, state management, and production troubleshooting.

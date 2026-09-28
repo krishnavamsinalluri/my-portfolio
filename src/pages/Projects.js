@@ -98,7 +98,7 @@ export default function Projects() {
           <span className="section-tag"><i className="fas fa-folder-open"></i> Portfolio Case Studies</span>
           <h2 className="gradient-text">Featured Projects & Deliverables</h2>
           <p style={{ margin: '0 auto' }}>
-            Production-deployed web applications, enterprise platforms, and ride-hailing systems built with Angular, React, Next.js, and REST APIs.
+            Production-deployed web applications, enterprise platforms, and ride-hailing systems built with Angular, React, Next.js, .NET, and REST APIs.
           </p>
         </div>
 
@@ -112,29 +112,43 @@ export default function Projects() {
               viewport={{ once: true, margin: '-50px' }}
               transition={{ duration: 0.6, delay: index * 0.1 }}
             >
-              {/* Visual preview column */}
+              {/* Visual preview column with Browser Mockup Frame */}
               <div className="case-study-visual">
-                <img 
-                  src={project.img} 
-                  alt={project.title}
-                  onError={(e) => {
-                    // Fallback visual if screenshot file is missing
-                    e.target.onerror = null;
-                    e.target.style.display = 'none';
-                    e.target.parentNode.innerHTML = `
-                      <div style="
-                        width:100%; height:100%; min-height:260px;
-                        display:flex; flex-direction:column; align-items:center; justify-content:center;
-                        background: radial-gradient(circle at center, rgba(139,92,246,0.15) 0%, rgba(17,23,38,0.9) 100%);
-                        border: 1px solid rgba(255,255,255,0.08); border-radius: 12px; padding: 24px; text-align: center;
-                      ">
-                        <i class="${project.category.includes('Mobility') ? 'fas fa-car' : project.category.includes('Enterprise') ? 'fas fa-users-cog' : 'fas fa-globe'}" style="font-size: 48px; color: ${project.accent}; margin-bottom: 14px;"></i>
-                        <h4 style="font-size: 18px; color: #ffffff; margin-bottom: 6px;">${project.title}</h4>
-                        <span style="font-size: 12px; color: var(--text-secondary); font-family: 'Fira Code', monospace;">${project.tech.slice(0, 3).join(' · ')}</span>
-                      </div>
-                    `;
-                  }}
-                />
+                <div className="browser-mockup-frame">
+                  <div className="browser-header">
+                    <div className="window-dots">
+                      <span className="dot dot-red"></span>
+                      <span className="dot dot-yellow"></span>
+                      <span className="dot dot-green"></span>
+                    </div>
+                    <div className="browser-address-bar">
+                      <i className="fas fa-lock" style={{ fontSize: '10px', color: '#10b981', marginRight: '6px' }}></i>
+                      {project.website ? project.website : `https://${project.id}.app.internal`}
+                    </div>
+                  </div>
+                  <div className="browser-screen">
+                    <img 
+                      src={project.img} 
+                      alt={project.title}
+                      onError={(e) => {
+                        e.target.onerror = null;
+                        e.target.style.display = 'none';
+                        e.target.parentNode.innerHTML = `
+                          <div style="
+                            width:100%; height:100%; min-height:220px;
+                            display:flex; flex-direction:column; align-items:center; justify-content:center;
+                            background: radial-gradient(circle at center, rgba(139,92,246,0.2) 0%, rgba(17,23,38,0.95) 100%);
+                            padding: 24px; text-align: center;
+                          ">
+                            <i class="${project.category.includes('Mobility') ? 'fas fa-car' : project.category.includes('Enterprise') ? 'fas fa-users-cog' : 'fas fa-globe'}" style="font-size: 44px; color: ${project.accent}; margin-bottom: 12px;"></i>
+                            <h4 style="font-size: 17px; color: #ffffff; margin-bottom: 6px;">${project.title}</h4>
+                            <span style="font-size: 12px; color: #94a3b8; font-family: 'Fira Code', monospace;">${project.tech.slice(0, 3).join(' · ')}</span>
+                          </div>
+                        `;
+                      }}
+                    />
+                  </div>
+                </div>
               </div>
 
               {/* Info & case breakdown column */}
