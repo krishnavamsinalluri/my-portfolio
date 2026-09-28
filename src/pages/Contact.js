@@ -66,7 +66,7 @@ export default function Contact() {
           >
             <h3 style={{ fontSize: '24px', marginBottom: '12px' }}>Direct Contact Info</h3>
             <p style={{ fontSize: '14px', color: 'var(--text-secondary)', marginBottom: '30px' }}>
-              I am open to full-time Frontend Engineer positions, freelance projects, and tech conversations.
+              I am open to full-time Software Engineer positions, freelance projects, and tech conversations.
             </p>
 
             <div style={{ marginBottom: '32px' }}>

@@ -2,7 +2,7 @@ import { motion } from 'framer-motion';
 
 const skillGroups = [
   {
-    category: 'Frontend Frameworks & Languages',
+    category: 'Web Frameworks & Core Languages',
     icon: 'fas fa-code',
     color: '#8b5cf6',
     skills: [
@@ -19,10 +19,12 @@ const skillGroups = [
     ],
   },
   {
-    category: 'APIs & Integration',
-    icon: 'fas fa-plug',
+    category: 'Backend, APIs & Databases',
+    icon: 'fas fa-server',
     color: '#06b6d4',
     skills: [
+      { name: '.NET', icon: 'fas fa-cubes', color: '#512bd4' },
+      { name: 'SQL', icon: 'fas fa-database', color: '#336791' },
       { name: 'REST APIs', icon: 'fas fa-plug', color: '#10b981' },
       { name: 'Web Services', icon: 'fas fa-network-wired', color: '#06b6d4' },
       { name: 'Axios', icon: 'fas fa-exchange-alt', color: '#5a29e4' },
@@ -68,7 +70,7 @@ export default function Skills() {
           <span className="section-tag"><i className="fas fa-layer-group"></i> Technical Skills</span>
           <h2 className="gradient-text">Core Competencies & Stack</h2>
           <p style={{ margin: '0 auto' }}>
-            Proven capabilities in frontend frameworks, REST API communication, modern UI systems, and AI-assisted workflows.
+            Capabilities in Angular, React, Next.js, TypeScript, .NET, SQL, REST APIs, and modern development workflows.
           </p>
         </div>
 

@@ -56,7 +56,7 @@ export default function Home() {
               </h1>
 
               <div className="hero-subtitle">
-                Frontend Developer · Angular, React & Next.js
+                Software Engineer · Angular, React, Next.js, TypeScript, .NET & SQL
               </div>
 
               <p className="hero-desc">

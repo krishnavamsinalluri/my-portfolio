@@ -70,7 +70,7 @@ export default function HeroDashboard() {
               transition={{ duration: 0.3 }}
             >
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '14px' }}>
-                <span className="code-comment">{"// Krishna Vamsi — Frontend Developer Profile"}</span>
+                <span className="code-comment">{"// Krishna Vamsi — Software Engineer Profile"}</span>
                 <button 
                   onClick={handleCopyCode}
                   style={{
@@ -94,8 +94,8 @@ export default function HeroDashboard() {
                   <span className="code-keyword">export const</span> <span className="code-function">krishnaVamsi</span>: <span className="code-property">Developer</span> = &#123;<br />
                   &nbsp;&nbsp;name: <span className="code-string">'Krishna Vamsi'</span>,<br />
                   &nbsp;&nbsp;role: <span className="code-string">'Software Engineer @ SNAD Developers'</span>,<br />
-                  &nbsp;&nbsp;experience: <span className="code-string">'2+ Years Frontend Engineering'</span>,<br />
-                  &nbsp;&nbsp;coreStack: [<span className="code-string">'Angular'</span>, <span className="code-string">'React.js'</span>, <span className="code-string">'Next.js'</span>, <span className="code-string">'TypeScript'</span>],<br />
+                  &nbsp;&nbsp;experience: <span className="code-string">'2+ Years Software Engineering'</span>,<br />
+                  &nbsp;&nbsp;coreStack: [<span className="code-string">'Angular'</span>, <span className="code-string">'React.js'</span>, <span className="code-string">'Next.js'</span>, <span className="code-string">'.NET'</span>, <span className="code-string">'SQL'</span>],<br />
                   &nbsp;&nbsp;specialties: [<span className="code-string">'REST API Integration'</span>, <span className="code-string">'Figma-to-UI'</span>, <span className="code-string">'PrimeNG'</span>],<br />
                   &nbsp;&nbsp;location: <span className="code-string">'Hyderabad, India'</span>,<br />
                   &nbsp;&nbsp;openForHire: <span className="code-keyword">true</span>,<br />
@@ -105,16 +105,16 @@ export default function HeroDashboard() {
 
               <div className="tech-badge-cloud" style={{ marginTop: '20px' }}>
                 <span className="tech-pill" style={{ borderColor: 'rgba(221, 0, 49, 0.4)', color: '#ef4444' }}>
-                  <i className="fab fa-angular"></i> Angular 17+
+                  <i className="fab fa-angular"></i> Angular
                 </span>
                 <span className="tech-pill" style={{ borderColor: 'rgba(97, 218, 251, 0.4)', color: '#38bdf8' }}>
-                  <i className="fab fa-react"></i> React 19
+                  <i className="fab fa-react"></i> React
                 </span>
-                <span className="tech-pill" style={{ borderColor: 'rgba(255, 255, 255, 0.3)', color: '#f8fafc' }}>
-                  <i className="fas fa-cube"></i> Next.js
+                <span className="tech-pill" style={{ borderColor: 'rgba(81, 43, 212, 0.4)', color: '#a78bfa' }}>
+                  <i className="fas fa-cubes"></i> .NET
                 </span>
-                <span className="tech-pill" style={{ borderColor: 'rgba(49, 120, 198, 0.4)', color: '#60a5fa' }}>
-                  <i className="fas fa-code"></i> TypeScript
+                <span className="tech-pill" style={{ borderColor: 'rgba(51, 103, 145, 0.4)', color: '#38bdf8' }}>
+                  <i className="fas fa-database"></i> SQL
                 </span>
               </div>
             </motion.div>

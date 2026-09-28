@@ -34,7 +34,7 @@ export default function About() {
             />
             <div className="about-experience-badge">
               <h3>2+</h3>
-              <p>Years Experience<br /><span style={{ color: 'var(--accent-violet-light)' }}>Frontend Engineering</span></p>
+              <p>Years Experience<br /><span style={{ color: 'var(--accent-violet-light)' }}>Software Engineering</span></p>
             </div>
           </motion.div>
 
@@ -47,7 +47,7 @@ export default function About() {
           >
             <div className="wpo-section-title" style={{ marginBottom: '20px' }}>
               <span className="section-tag"><i className="fas fa-user-check"></i> About Me</span>
-              <h2 className="gradient-text">Frontend Developer Building Scalable Web Apps</h2>
+              <h2 className="gradient-text">Software Engineer Building Scalable Web Apps</h2>
             </div>
 
             <p style={{ fontSize: '15px', color: 'var(--text-secondary)', lineHeight: '1.7', marginBottom: '14px' }}>
