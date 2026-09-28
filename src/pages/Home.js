@@ -1,145 +1,153 @@
-import { useEffect, useRef, useState } from 'react';
+import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
-
-const statsData = [
-  { target: 2, suffix: '+', label: 'Years Experience' },
-  { target: 5, suffix: '+', label: 'Major Projects' },
-  { target: 15, suffix: '+', label: 'Technical Skills' },
-  { target: 100, suffix: '%', label: 'Commitment' },
-];
+import HeroDashboard from '../components/HeroDashboard';
 
 export default function Home() {
-  const textRef = useRef();
-  const imgRef = useRef();
-  const statsRef = useRef();
-  const [counts, setCounts] = useState(statsData.map(() => 0));
-  const [hasAnimatedStats, setHasAnimatedStats] = useState(false);
-
-  useEffect(() => {
-    const els = [textRef.current, imgRef.current];
-    els.forEach((el, i) => {
-      if (!el) return;
-      el.style.opacity = '0';
-      el.style.transform = i === 0 ? 'translateX(-40px)' : 'translateX(40px)';
-      setTimeout(() => {
-        el.style.transition = 'opacity 0.8s ease, transform 0.8s ease';
-        el.style.opacity = '1';
-        el.style.transform = 'translateX(0)';
-      }, 200 + i * 200);
-    });
-
-    const observer = new IntersectionObserver(([entry]) => {
-      if (entry.isIntersecting && !hasAnimatedStats) {
-        setHasAnimatedStats(true);
-        const duration = 1800; // ms duration for count-up
-        const startTime = performance.now();
-
-        const animate = (currentTime) => {
-          const elapsedTime = currentTime - startTime;
-          const progress = Math.min(elapsedTime / duration, 1);
-          const easeProgress = 1 - Math.pow(1 - progress, 3);
-
-          setCounts(
-            statsData.map((item) => Math.floor(easeProgress * item.target))
-          );
-
-          if (progress < 1) {
-            requestAnimationFrame(animate);
-          } else {
-            setCounts(statsData.map((item) => item.target));
-          }
-        };
-
-        requestAnimationFrame(animate);
-
-        const items = statsRef.current?.querySelectorAll('.wpo-stats-content');
-        items?.forEach((item, i) => {
-          item.style.opacity = '0';
-          item.style.transform = 'translateY(30px)';
-          setTimeout(() => {
-            item.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
-            item.style.opacity = '1';
-            item.style.transform = 'translateY(0)';
-          }, i * 150);
-        });
-        observer.disconnect();
-      }
-    }, { threshold: 0.3 });
-
-    if (statsRef.current) observer.observe(statsRef.current);
-    return () => observer.disconnect();
-  }, [hasAnimatedStats]);
+  const pageCards = [
+    {
+      title: 'Featured Projects',
+      desc: 'Case studies for HRMS, Valam Ride-Hailing, RightlyHR, Sirisampada, and E-Commerce.',
+      path: '/projects',
+      icon: 'fas fa-folder-open',
+      color: '#8b5cf6'
+    },
+    {
+      title: 'Work Experience',
+      desc: '2+ years software engineering journey at SNAD Developers and Edupoly Solutions.',
+      path: '/experience',
+      icon: 'fas fa-briefcase',
+      color: '#06b6d4'
+    },
+    {
+      title: 'Technical Skills',
+      desc: 'Proficiencies across Angular, React, Next.js, TypeScript, REST APIs & AI Dev tools.',
+      path: '/skills',
+      icon: 'fas fa-layer-group',
+      color: '#10b981'
+    },
+    {
+      title: 'About Krishna Vamsi',
+      desc: 'Software Engineer background, transition story, core focus, and contact details.',
+      path: '/about',
+      icon: 'fas fa-user-check',
+      color: '#ec4899'
+    }
+  ];
 
   return (
     <>
-      <section className="static-hero" id="home">
-        {/* Animated background blobs */}
-        <div className="hero-blob hero-blob-1"></div>
-        <div className="hero-blob hero-blob-2"></div>
-        <div className="hero-blob hero-blob-3"></div>
+      {/* ─── Hero Section ─────────────────────────── */}
+      <section className="hero-section" id="home">
+        <div className="container">
+          <div className="hero-grid">
+            {/* Left Column: Hero Text & Actions */}
+            <motion.div
+              initial={{ opacity: 0, x: -40 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.7, ease: [0.2, 0.8, 0.2, 1] }}
+            >
+              <div className="hero-tag">
+                <span className="status-dot"></span>
+                <span>Software Engineer @ SNAD Developers</span>
+              </div>
 
-        <div className="container" style={{ position: 'relative', zIndex: 1 }}>
-          <div className="row align-items-center">
-            <div className="col-lg-6 col-12" ref={textRef}>
-              <div className="wpo-static-hero-text-nd">
-                <h5 className="hero-greeting">Hello, I am</h5>
-                <h1>Krishna <span>Vamsi</span></h1>
-                <p>Software Engineer @ <strong>SNAD Developers</strong></p>
-                <p className="hero-tagline">Frontend Developer | React.js, Angular, Next.js, TypeScript</p>
-                <div className="hero-btn">
-                  <a href="/assets/pdf/Krishna_Vamsi_Resume.pdf" className="theme-btn" download>
-                    Download CV
-                  </a>
-                  <Link to="/contact" className="theme-btn-s2">Hire Me</Link>
-                </div>
-                <div className="hero-socials">
-                  <a href="https://www.linkedin.com/in/krishna-vamsi-503986249" target="_blank" rel="noreferrer" title="LinkedIn">
-                    <i className="fab fa-linkedin-in"></i>
-                  </a>
-                  <a href="https://github.com/krishnavamsinalluri" target="_blank" rel="noreferrer" title="GitHub">
-                    <i className="fab fa-github"></i>
-                  </a>
-                  <a href="mailto:vamsinalluri806@gmail.com" title="Email">
-                    <i className="fas fa-envelope"></i>
-                  </a>
-                </div>
+              <h1 className="hero-title">
+                Building interfaces that <span className="gradient-accent-text">feel effortless.</span>
+              </h1>
+
+              <div className="hero-subtitle">
+                Frontend Developer · Angular, React & Next.js
               </div>
-            </div>
-            <div className="col-lg-6 col-12" ref={imgRef}>
-              <div className="static-hero-img">
-                <div className="hero-image-wrapper">
-                  <div className="hero-ring hero-ring-1"></div>
-                  <div className="hero-ring hero-ring-2"></div>
-                  <div className="static-hero-img-inner">
-                    <img src="\assets\images\Hero-image.jpeg" alt="Krishna Vamsi" />
-                  </div>
-                  <div className="floating-badge fb-top-left" title="Angular">
-                    <i className="fab fa-angular" style={{ color: '#dd0031' }}></i>
-                  </div>
-                  <div className="floating-badge fb-top-right" title="React.js">
-                    <i className="fab fa-react" style={{ color: '#61dafb' }}></i>
-                  </div>
-                  <div className="floating-badge fb-bottom-right" title="Next.js">
-                    <span style={{ color: '#000000', fontFamily: 'sans-serif', fontWeight: 900, fontSize: 20 }}>N</span>
-                  </div>
-                  <div className="floating-badge fb-bottom-left" title="TypeScript">
-                    <span style={{ color: '#3178c6', fontFamily: 'sans-serif', fontWeight: 800, fontSize: 24 }}>TS</span>
-                  </div>
-                </div>
+
+              <p className="hero-desc">
+                2+ years of experience engineering responsive, accessible, and high-performance web applications with Angular, React, Next.js, TypeScript, and REST APIs.
+              </p>
+
+              <div className="hero-actions">
+                <Link to="/projects" className="btn-primary">
+                  Explore Work <i className="fas fa-arrow-right"></i>
+                </Link>
+                <Link to="/contact" className="btn-secondary">
+                  Contact Me
+                </Link>
+                <a href="/assets/pdf/Krishna_Vamsi_Resume.pdf" className="btn-outline" download>
+                  <i className="fas fa-download"></i> Download Resume
+                </a>
               </div>
-            </div>
+
+              <div className="hero-socials">
+                <span style={{ fontSize: '13px', color: 'var(--text-muted)', fontWeight: '600', marginRight: '6px' }}>
+                  Connect:
+                </span>
+                <a 
+                  href="https://www.linkedin.com/in/krishna-vamsi-503986249" 
+                  target="_blank" 
+                  rel="noreferrer" 
+                  className="social-link" 
+                  title="LinkedIn Profile"
+                >
+                  <i className="fab fa-linkedin-in"></i>
+                </a>
+                <a 
+                  href="https://github.com/krishnavamsinalluri" 
+                  target="_blank" 
+                  rel="noreferrer" 
+                  className="social-link" 
+                  title="GitHub Profile"
+                >
+                  <i className="fab fa-github"></i>
+                </a>
+                <a 
+                  href="mailto:vamsinalluri806@gmail.com" 
+                  className="social-link" 
+                  title="Email Krishna Vamsi"
+                >
+                  <i className="fas fa-envelope"></i>
+                </a>
+              </div>
+            </motion.div>
+
+            {/* Right Column: Interactive Dev Workspace Visual */}
+            <HeroDashboard />
           </div>
         </div>
       </section>
 
-      <section className="wpo-stats-section" style={{ padding: '80px 0' }} ref={statsRef}>
+      {/* ─── Quick Navigation Cards Section ──────────── */}
+      <section className="section-padding" style={{ paddingTop: '20px' }}>
         <div className="container">
-          <div className="wpo-stats-wrap">
-            {statsData.map(({ suffix, label }, idx) => (
-              <div className="wpo-stats-content" key={label}>
-                <h3>{counts[idx]}{suffix}</h3>
-                <p>{label}</p>
-              </div>
+          <div className="wpo-section-title text-center">
+            <span className="section-tag"><i className="fas fa-compass"></i> Explore Portfolio</span>
+            <h2 className="gradient-text">Explore Sections</h2>
+            <p style={{ margin: '0 auto' }}>
+              Select any section to view detailed project case studies, work experience, technical skills, or contact info.
+            </p>
+          </div>
+
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(260px, 1fr))', gap: '24px' }}>
+            {pageCards.map((card, idx) => (
+              <motion.div
+                key={card.title}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.4, delay: idx * 0.1 }}
+              >
+                <Link to={card.path} className="skill-category-card" style={{ display: 'block', height: '100%' }}>
+                  <div className="skill-category-header">
+                    <div className="skill-category-icon" style={{ background: `${card.color}20`, color: card.color }}>
+                      <i className={card.icon}></i>
+                    </div>
+                    <h3>{card.title}</h3>
+                  </div>
+                  <p style={{ fontSize: '14px', color: 'var(--text-secondary)', lineHeight: '1.6', marginBottom: '16px' }}>
+                    {card.desc}
+                  </p>
+                  <span style={{ fontSize: '13px', fontWeight: '600', color: card.color, display: 'inline-flex', alignItems: 'center', gap: '6px' }}>
+                    View {card.title} <i className="fas fa-arrow-right" style={{ fontSize: '11px' }}></i>
+                  </span>
+                </Link>
+              </motion.div>
             ))}
           </div>
         </div>

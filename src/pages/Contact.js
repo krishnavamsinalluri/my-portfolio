@@ -1,4 +1,5 @@
-import { useState, useRef, useEffect } from 'react';
+import { useState, useRef } from 'react';
+import { motion } from 'framer-motion';
 import emailjs from '@emailjs/browser';
 
 const EMAILJS_SERVICE_ID  = 'service_4tzpuyp';
@@ -7,28 +8,9 @@ const EMAILJS_PUBLIC_KEY  = 'NFMiJs5omhRp3yoIl';
 
 export default function Contact() {
   const formRef = useRef();
-  const sectionRef = useRef();
   const [form, setForm] = useState({ from_name: '', from_email: '', subject: '', message: '' });
   const [status, setStatus] = useState(null);
   const [loading, setLoading] = useState(false);
-  const [focused, setFocused] = useState('');
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(([entry]) => {
-      if (entry.isIntersecting) {
-        entry.target.querySelectorAll('.contact-animate').forEach((el, i) => {
-          setTimeout(() => {
-            el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
-            el.style.opacity = '1';
-            el.style.transform = 'translateY(0)';
-          }, i * 120);
-        });
-        observer.disconnect();
-      }
-    }, { threshold: 0.1 });
-    if (sectionRef.current) observer.observe(sectionRef.current);
-    return () => observer.disconnect();
-  }, []);
 
   const handleChange = (e) => setForm({ ...form, [e.target.name]: e.target.value });
 
@@ -36,144 +18,167 @@ export default function Contact() {
     e.preventDefault();
     const { from_name, from_email, message } = form;
     const emailValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(from_email);
+    
     if (!from_name || !from_email || !message || !emailValid) {
-      setStatus({ type: 'danger', msg: 'Please fill all required fields with a valid email.' });
+      setStatus({ type: 'danger', msg: 'Please fill all required fields with a valid email address.' });
       return;
     }
+    
     setLoading(true);
     setStatus(null);
+    
     try {
       await emailjs.sendForm(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, formRef.current, EMAILJS_PUBLIC_KEY);
-      setStatus({ type: 'success', msg: '✅ Message sent! I\'ll get back to you soon.' });
+      setStatus({ type: 'success', msg: '✅ Thank you! Your message has been sent successfully.' });
       setForm({ from_name: '', from_email: '', subject: '', message: '' });
-    } catch {
-      setStatus({ type: 'danger', msg: '❌ Failed to send. Please try again or email me directly.' });
+    } catch (err) {
+      setStatus({ type: 'danger', msg: '❌ Could not send message automatically. Please email vamsinalluri806@gmail.com directly.' });
     } finally {
       setLoading(false);
     }
   };
 
-  const infoCards = [
+  const contactMethods = [
     { icon: 'fas fa-map-marker-alt', label: 'Location', value: 'Hyderabad, India', href: null },
-    { icon: 'fas fa-envelope',       label: 'Email',    value: 'vamsinalluri806@gmail.com',          href: 'mailto:vamsinalluri806@gmail.com' },
-    { icon: 'fas fa-phone',          label: 'Phone',    value: '+91 9573660370',                     href: 'tel:+919573660370' },
-  ];
-
-  const socials = [
-    { icon: 'fab fa-linkedin-in', href: 'https://www.linkedin.com/in/krishna-vamsi-503986249', label: 'LinkedIn' },
-    { icon: 'fab fa-github',      href: 'https://github.com/krishnavamsinalluri',              label: 'GitHub' },
-    { icon: 'fas fa-envelope',    href: 'mailto:vamsinalluri806@gmail.com',                    label: 'Email' },
+    { icon: 'fas fa-envelope', label: 'Email', value: 'vamsinalluri806@gmail.com', href: 'mailto:vamsinalluri806@gmail.com' },
+    { icon: 'fas fa-phone', label: 'Phone', value: '+91 9573660370', href: 'tel:+919573660370' },
   ];
 
   return (
-    <section className="contact-section section-padding" id="contact" ref={sectionRef}>
+    <section className="contact-section section-padding" id="contact">
       <div className="container">
-
-        {/* Header */}
-        <div className="contact-header contact-animate" style={{ opacity: 0, transform: 'translateY(30px)' }}>
-          <span className="section-tag">Contact</span>
-          <h2>Let's Work Together</h2>
-          <p>Have a project in mind or just want to say hi? My inbox is always open.</p>
+        <div className="wpo-section-title text-center">
+          <span className="section-tag"><i className="fas fa-paper-plane"></i> Get In Touch</span>
+          <h2 className="gradient-text">Let's Work Together</h2>
+          <p style={{ margin: '0 auto' }}>
+            Have an open role, project opportunity, or question? Feel free to drop a message.
+          </p>
         </div>
 
         <div className="contact-grid">
+          {/* Left info column */}
+          <motion.div 
+            className="contact-info-card"
+            initial={{ opacity: 0, x: -30 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5 }}
+          >
+            <h3 style={{ fontSize: '24px', marginBottom: '12px' }}>Direct Contact Info</h3>
+            <p style={{ fontSize: '14px', color: 'var(--text-secondary)', marginBottom: '30px' }}>
+              I am open to full-time Frontend Engineer positions, freelance projects, and tech conversations.
+            </p>
 
-          {/* Left Panel */}
-          <div className="contact-left contact-animate" style={{ opacity: 0, transform: 'translateY(30px)' }}>
-            <div className="contact-left-inner">
-              <h3>Get In Touch</h3>
-              <p>I'm currently open to new opportunities. Whether it's a full-time role, freelance project, or just a chat — feel free to reach out!</p>
-
-              <div className="contact-info-cards">
-                {infoCards.map(({ icon, label, value, href }) => (
-                  <div className="contact-info-card" key={label}>
-                    <div className="contact-info-icon"><i className={icon}></i></div>
-                    <div>
-                      <span className="contact-info-label">{label}</span>
-                      {href
-                        ? <a href={href} className="contact-info-value">{value}</a>
-                        : <p className="contact-info-value">{value}</p>
-                      }
-                    </div>
+            <div style={{ marginBottom: '32px' }}>
+              {contactMethods.map((method) => (
+                <div key={method.label} className="contact-method">
+                  <div className="contact-method-icon">
+                    <i className={method.icon}></i>
                   </div>
-                ))}
-              </div>
-
-              <div className="contact-socials">
-                <p className="contact-socials-title">Find me on</p>
-                <div className="contact-social-links">
-                  {socials.map(({ icon, href, label }) => (
-                    <a key={label} href={href} target="_blank" rel="noreferrer" title={label} className="contact-social-btn">
-                      <i className={icon}></i>
-                    </a>
-                  ))}
+                  <div>
+                    <label>{method.label}</label>
+                    {method.href ? (
+                      <a href={method.href}>{method.value}</a>
+                    ) : (
+                      <p>{method.value}</p>
+                    )}
+                  </div>
                 </div>
+              ))}
+            </div>
+
+            <div>
+              <label style={{ fontSize: '12px', textTransform: 'uppercase', color: 'var(--text-muted)', fontWeight: '700', display: 'block', marginBottom: '12px' }}>
+                Connect on Networks
+              </label>
+              <div className="hero-socials">
+                <a href="https://www.linkedin.com/in/krishna-vamsi-503986249" target="_blank" rel="noreferrer" className="social-link" title="LinkedIn">
+                  <i className="fab fa-linkedin-in"></i>
+                </a>
+                <a href="https://github.com/krishnavamsinalluri" target="_blank" rel="noreferrer" className="social-link" title="GitHub">
+                  <i className="fab fa-github"></i>
+                </a>
+                <a href="mailto:vamsinalluri806@gmail.com" className="social-link" title="Email">
+                  <i className="fas fa-envelope"></i>
+                </a>
               </div>
             </div>
-          </div>
+          </motion.div>
 
-          {/* Right Panel - Form */}
-          <div className="contact-right contact-animate" style={{ opacity: 0, transform: 'translateY(30px)' }}>
-            <div className="contact-form-card">
-              <h3>Send a Message</h3>
-              <form ref={formRef} onSubmit={handleSubmit} noValidate>
-                <div className="form-row">
-                  <div className={`float-group ${focused === 'from_name' || form.from_name ? 'active' : ''}`}>
-                    <input
-                      type="text" name="from_name" value={form.from_name}
-                      onChange={handleChange}
-                      onFocus={() => setFocused('from_name')}
-                      onBlur={() => setFocused('')}
-                      placeholder="Your Name *"
-                      required
-                    />
-                  </div>
-                  <div className={`float-group ${focused === 'from_email' || form.from_email ? 'active' : ''}`}>
-                    <input
-                      type="email" name="from_email" value={form.from_email}
-                      onChange={handleChange}
-                      onFocus={() => setFocused('from_email')}
-                      onBlur={() => setFocused('')}
-                      placeholder="Your Email *"
-                      required
-                    />
-                  </div>
-                </div>
-                <div className={`float-group ${focused === 'subject' || form.subject ? 'active' : ''}`}>
+          {/* Right form column */}
+          <motion.div 
+            className="contact-form-card"
+            initial={{ opacity: 0, x: 30 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5 }}
+          >
+            <h3 style={{ fontSize: '24px', marginBottom: '20px' }}>Send a Message</h3>
+            
+            <form ref={formRef} onSubmit={handleSubmit} noValidate>
+              <div className="form-row">
+                <div className="form-group">
                   <input
-                    type="text" name="subject" value={form.subject}
+                    type="text"
+                    name="from_name"
+                    value={form.from_name}
                     onChange={handleChange}
-                    onFocus={() => setFocused('subject')}
-                    onBlur={() => setFocused('')}
-                    placeholder="Subject"
+                    placeholder="Your Name *"
+                    className="form-control"
+                    required
                   />
                 </div>
-                <div className={`float-group ${focused === 'message' || form.message ? 'active' : ''}`}>
-                  <textarea
-                    name="message" value={form.message} rows="5"
+                <div className="form-group">
+                  <input
+                    type="email"
+                    name="from_email"
+                    value={form.from_email}
                     onChange={handleChange}
-                    onFocus={() => setFocused('message')}
-                    onBlur={() => setFocused('')}
-                    placeholder="Your Message *"
+                    placeholder="Your Email *"
+                    className="form-control"
                     required
-                  ></textarea>
+                  />
                 </div>
+              </div>
 
-                {status && (
-                  <div className={`contact-alert contact-alert-${status.type}`}>{status.msg}</div>
+              <div className="form-group">
+                <input
+                  type="text"
+                  name="subject"
+                  value={form.subject}
+                  onChange={handleChange}
+                  placeholder="Subject (Optional)"
+                  className="form-control"
+                />
+              </div>
+
+              <div className="form-group">
+                <textarea
+                  name="message"
+                  value={form.message}
+                  onChange={handleChange}
+                  rows="5"
+                  placeholder="Your Message *"
+                  className="form-control"
+                  required
+                ></textarea>
+              </div>
+
+              {status && (
+                <div className={`alert-msg alert-${status.type}`}>
+                  {status.msg}
+                </div>
+              )}
+
+              <button type="submit" className="btn-primary" style={{ width: '100%' }} disabled={loading}>
+                {loading ? (
+                  <><i className="fas fa-spinner fa-spin"></i> Sending Message...</>
+                ) : (
+                  <><i className="fas fa-paper-plane"></i> Send Message</>
                 )}
-
-                <button type="submit" className="contact-submit-btn" disabled={loading}>
-                  {loading ? (
-                    <><span className="btn-spinner"></span> Sending...</>
-                  ) : (
-                    <><i className="fas fa-paper-plane"></i> Send Message</>
-                  )}
-                </button>
-              </form>
-            </div>
-          </div>
-
+              </button>
+            </form>
+          </motion.div>
         </div>
       </div>
     </section>

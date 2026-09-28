@@ -1,13 +1,14 @@
-import { useEffect, useRef } from 'react';
+import { motion } from 'framer-motion';
 
 const skillGroups = [
   {
-    category: 'Frontend Development',
+    category: 'Frontend Frameworks & Languages',
     icon: 'fas fa-code',
+    color: '#8b5cf6',
     skills: [
       { name: 'Angular', icon: 'fab fa-angular', color: '#dd0031' },
       { name: 'React.js', icon: 'fab fa-react', color: '#61dafb' },
-      { name: 'Next.js', icon: 'fas fa-cube', color: '#000000' },
+      { name: 'Next.js', icon: 'fas fa-cube', color: '#f8fafc' },
       { name: 'TypeScript', icon: 'fas fa-code', color: '#3178c6' },
       { name: 'JavaScript', icon: 'fab fa-js-square', color: '#f7df1e' },
       { name: 'HTML5', icon: 'fab fa-html5', color: '#e34f26' },
@@ -20,6 +21,7 @@ const skillGroups = [
   {
     category: 'APIs & Integration',
     icon: 'fas fa-plug',
+    color: '#06b6d4',
     skills: [
       { name: 'REST APIs', icon: 'fas fa-plug', color: '#10b981' },
       { name: 'Web Services', icon: 'fas fa-network-wired', color: '#06b6d4' },
@@ -30,25 +32,27 @@ const skillGroups = [
     ],
   },
   {
-    category: 'Tools, CI/CD & Support',
+    category: 'Tools, CI/CD & Production Support',
     icon: 'fas fa-tools',
+    color: '#10b981',
     skills: [
       { name: 'Git', icon: 'fab fa-git-alt', color: '#f05032' },
-      { name: 'GitHub', icon: 'fab fa-github', color: '#333333' },
+      { name: 'GitHub', icon: 'fab fa-github', color: '#f8fafc' },
       { name: 'GitLab', icon: 'fab fa-gitlab', color: '#fc6d26' },
       { name: 'VS Code', icon: 'fas fa-laptop-code', color: '#007acc' },
       { name: 'SoapUI', icon: 'fas fa-vial', color: '#eab308' },
-      { name: 'CI/CD & Deployment', icon: 'fas fa-rocket', color: '#ef4444' },
+      { name: 'CI/CD & Release', icon: 'fas fa-rocket', color: '#ef4444' },
       { name: 'Production Support', icon: 'fas fa-headset', color: '#8b5cf6' },
     ],
   },
   {
     category: 'AI-Assisted Dev & UI/UX',
     icon: 'fas fa-magic',
+    color: '#ec4899',
     skills: [
       { name: 'GitHub Copilot', icon: 'fas fa-robot', color: '#6e40c9' },
       { name: 'Claude & Antigravity', icon: 'fas fa-brain', color: '#8b5cf6' },
-      { name: 'AI Coding & Debugging', icon: 'fas fa-microchip', color: '#3b82f6' },
+      { name: 'AI Debugging', icon: 'fas fa-microchip', color: '#3b82f6' },
       { name: 'Figma-to-UI', icon: 'fab fa-figma', color: '#f24e1e' },
       { name: 'Pixel-Perfect UI', icon: 'fas fa-vector-square', color: '#ec4899' },
       { name: 'Responsive Design', icon: 'fas fa-mobile-alt', color: '#14b8a6' },
@@ -57,62 +61,43 @@ const skillGroups = [
 ];
 
 export default function Skills() {
-  const sectionRef = useRef();
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(([entry]) => {
-      if (entry.isIntersecting) {
-        const groups = sectionRef.current?.querySelectorAll('.skill-group');
-        groups?.forEach((group, groupIdx) => {
-          const cards = group.querySelectorAll('.skill-card');
-          cards.forEach((card, cardIdx) => {
-            card.style.opacity = '0';
-            card.style.transform = 'translateY(25px) scale(0.92)';
-            setTimeout(() => {
-              card.style.transition = 'all 0.5s cubic-bezier(0.2, 0.8, 0.2, 1)';
-              card.style.opacity = '1';
-              card.style.transform = 'translateY(0) scale(1)';
-            }, groupIdx * 150 + cardIdx * 45);
-          });
-        });
-        observer.disconnect();
-      }
-    }, { threshold: 0.15 });
-
-    if (sectionRef.current) observer.observe(sectionRef.current);
-    return () => observer.disconnect();
-  }, []);
-
   return (
-    <section className="wpo-skill-section section-padding" id="skills" ref={sectionRef}>
+    <section className="wpo-skill-section section-padding" id="skills">
       <div className="container">
-        <div className="row justify-content-center">
-          <div className="col-lg-6 col-12">
-            <div className="wpo-section-title text-center">
-              <span>My Skills</span>
-              <h2>Technical Proficiencies</h2>
-            </div>
-          </div>
+        <div className="wpo-section-title text-center">
+          <span className="section-tag"><i className="fas fa-layer-group"></i> Technical Skills</span>
+          <h2 className="gradient-text">Core Competencies & Stack</h2>
+          <p style={{ margin: '0 auto' }}>
+            Proven capabilities in frontend frameworks, REST API communication, modern UI systems, and AI-assisted workflows.
+          </p>
         </div>
 
-        <div className="skills-groups">
-          {skillGroups.map(({ category, icon, skills }) => (
-            <div className="skill-group" key={category}>
-              <div className="skill-group-header">
-                <i className={icon}></i>
-                <h3>{category}</h3>
+        <div className="skills-grid">
+          {skillGroups.map((group, idx) => (
+            <motion.div
+              key={group.category}
+              className="skill-category-card"
+              initial={{ opacity: 0, y: 25 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: '-40px' }}
+              transition={{ duration: 0.5, delay: idx * 0.1 }}
+            >
+              <div className="skill-category-header">
+                <div className="skill-category-icon" style={{ background: `${group.color}20`, color: group.color }}>
+                  <i className={group.icon}></i>
+                </div>
+                <h3>{group.category}</h3>
               </div>
-              <div className="skill-cards">
-                {skills.map(({ name, icon: sIcon, color }) => (
-                  <div className="skill-card" key={name}>
-                    <div className="skill-card-icon" style={{ background: `${color}18`, color }}>
-                      <i className={sIcon}></i>
-                    </div>
-                    <span>{name}</span>
-                  </div>
+
+              <div className="skill-items-wrap">
+                {group.skills.map((s) => (
+                  <span key={s.name} className="skill-badge">
+                    <i className={s.icon} style={{ color: s.color }}></i>
+                    {s.name}
+                  </span>
                 ))}
               </div>
-            </div>
+            </motion.div>
           ))}
         </div>
       </div>

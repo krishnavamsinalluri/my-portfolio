@@ -1,45 +1,12 @@
-import { useEffect, useRef } from 'react';
+import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 
 export default function About() {
-  const sectionRef = useRef();
-  const imgRef = useRef();
-  const textRef = useRef();
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(([entry]) => {
-      if (entry.isIntersecting) {
-        if (imgRef.current) {
-          imgRef.current.style.opacity = '0';
-          imgRef.current.style.transform = 'translateX(-40px)';
-          setTimeout(() => {
-            imgRef.current.style.transition = 'all 0.8s cubic-bezier(0.2, 0.8, 0.2, 1)';
-            imgRef.current.style.opacity = '1';
-            imgRef.current.style.transform = 'translateX(0)';
-          }, 100);
-        }
-        if (textRef.current) {
-          textRef.current.style.opacity = '0';
-          textRef.current.style.transform = 'translateX(40px)';
-          setTimeout(() => {
-            textRef.current.style.transition = 'all 0.8s cubic-bezier(0.2, 0.8, 0.2, 1)';
-            textRef.current.style.opacity = '1';
-            textRef.current.style.transform = 'translateX(0)';
-          }, 250);
-        }
-        observer.disconnect();
-      }
-    }, { threshold: 0.15 });
-
-    if (sectionRef.current) observer.observe(sectionRef.current);
-    return () => observer.disconnect();
-  }, []);
-
   const infoList = [
     { label: 'Name', value: 'Krishna Vamsi', icon: 'fas fa-user' },
-    { label: 'Role', value: 'Software Engineer', icon: 'fas fa-laptop-code' },
+    { label: 'Role', value: 'Software Engineer @ SNAD', icon: 'fas fa-laptop-code' },
     { label: 'Location', value: 'Hyderabad, India', icon: 'fas fa-map-marker-alt' },
-    { label: 'Availability', value: 'Open to Work', icon: 'fas fa-check-circle' },
+    { label: 'Availability', value: 'Open for Roles', icon: 'fas fa-check-circle' },
     { label: 'Email', value: 'vamsinalluri806@gmail.com', href: 'mailto:vamsinalluri806@gmail.com', icon: 'fas fa-envelope' },
     { label: 'Phone', value: '+91 9573660370', href: 'tel:+919573660370', icon: 'fas fa-phone' },
     { label: 'LinkedIn', value: 'krishna-vamsi', href: 'https://www.linkedin.com/in/krishna-vamsi-503986249', icon: 'fab fa-linkedin' },
@@ -47,61 +14,76 @@ export default function About() {
   ];
 
   return (
-    <section className="wpo-about-section section-padding" id="about" ref={sectionRef}>
+    <section className="wpo-about-section section-padding" id="about">
       <div className="container">
-        <div className="row align-items-center">
-          <div className="col-lg-5 col-12 mb-4 mb-lg-0" ref={imgRef}>
-            <div className="wpo-about-img-wrap">
-              <div className="wpo-about-img">
-                <img src="\assets\images\Hero-image.jpeg" alt="Krishna Vamsi" />
-                <div className="about-exp-badge">
-                  <h3>2+</h3>
-                  <p>Years Exp.</p>
-                </div>
-              </div>
+        <div className="about-grid">
+          {/* Profile photo container */}
+          <motion.div 
+            className="about-image-card"
+            initial={{ opacity: 0, x: -30 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+          >
+            <img 
+              src="/assets/images/Hero-image.jpeg" 
+              alt="Krishna Vamsi"
+              onError={(e) => {
+                e.target.src = '/assets/images/PROFILE-PHOTO.jpeg';
+              }}
+            />
+            <div className="about-experience-badge">
+              <h3>2+</h3>
+              <p>Years Experience<br /><span style={{ color: 'var(--accent-violet-light)' }}>Frontend Engineering</span></p>
             </div>
-          </div>
-          <div className="col-lg-7 col-12" ref={textRef}>
-            <div className="wpo-about-text-card">
-              <div className="wpo-section-title" style={{ marginBottom: '20px' }}>
-                <span>About Me</span>
-                <h2>Innovative Software Engineer Driving Digital Excellence</h2>
-              </div>
-              <p className="about-desc">
-                Software Engineer with 2+ years of experience building and supporting web and enterprise applications across the full development lifecycle — analysis, design, development, testing, deployment, and production support. Transitioned into software development from a Civil Engineering background through hands-on project work and focused self-driven upskilling.
-              </p>
-              <p className="about-desc" style={{ marginTop: '12px' }}>
-                Strong expertise in Angular, React.js, Next.js, TypeScript, JavaScript, HTML5, CSS3, Bootstrap, and SCSS, with hands-on experience integrating REST APIs and Java/.NET-based backends. Skilled in converting UX/UI and Figma designs into pixel-perfect, responsive, and reusable interfaces.
-              </p>
+          </motion.div>
 
-              <div className="about-info-grid">
-                {infoList.map(({ label, value, href, icon }) => (
-                  <div className="about-info-item" key={label}>
-                    <div className="info-icon"><i className={icon}></i></div>
-                    <div className="info-content">
-                      <span className="info-label">{label}</span>
-                      {href ? (
-                        <a href={href} target={href.startsWith('http') ? '_blank' : '_self'} rel="noreferrer" className="info-link">
-                          {value}
-                        </a>
-                      ) : (
-                        <span className="info-val">{value}</span>
-                      )}
-                    </div>
+          {/* About text content */}
+          <motion.div
+            initial={{ opacity: 0, x: 30 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+          >
+            <div className="wpo-section-title" style={{ marginBottom: '20px' }}>
+              <span className="section-tag"><i className="fas fa-user-check"></i> About Me</span>
+              <h2 className="gradient-text">Frontend Developer Building Scalable Web Apps</h2>
+            </div>
+
+            <p style={{ fontSize: '15px', color: 'var(--text-secondary)', lineHeight: '1.7', marginBottom: '14px' }}>
+              Software Engineer with 2+ years of experience engineering enterprise HR platforms, ride-hailing applications, and corporate websites across Angular, React, Next.js, and TypeScript.
+            </p>
+            <p style={{ fontSize: '14px', color: 'var(--text-muted)', lineHeight: '1.6' }}>
+              Transitioned into software engineering from a Civil Engineering background (B.Tech JNTUK SITE) through dedicated self-upskilling and hands-on production application development. Skilled in Figma-to-UI conversion, REST API integration, state management, and production troubleshooting.
+            </p>
+
+            <div className="info-grid">
+              {infoList.map((item) => (
+                <div className="info-item" key={item.label}>
+                  <i className={item.icon}></i>
+                  <div>
+                    <label>{item.label}</label>
+                    {item.href ? (
+                      <a href={item.href} target={item.href.startsWith('http') ? '_blank' : '_self'} rel="noreferrer">
+                        {item.value}
+                      </a>
+                    ) : (
+                      <span>{item.value}</span>
+                    )}
                   </div>
-                ))}
-              </div>
-
-              <div className="about-btns">
-                <a href="/assets/pdf/Krishna_Vamsi_Resume.pdf" className="theme-btn" download>
-                  <i className="fas fa-download"></i> Download CV
-                </a>
-                <Link to="/contact" className="theme-btn-s2">
-                  <i className="fas fa-paper-plane"></i> Hire Me
-                </Link>
-              </div>
+                </div>
+              ))}
             </div>
-          </div>
+
+            <div style={{ display: 'flex', gap: '14px', flexWrap: 'wrap' }}>
+              <a href="/assets/pdf/Krishna_Vamsi_Resume.pdf" className="btn-primary" download>
+                <i className="fas fa-download"></i> Download Resume
+              </a>
+              <Link to="/contact" className="btn-secondary">
+                <i className="fas fa-paper-plane"></i> Contact Me
+              </Link>
+            </div>
+          </motion.div>
         </div>
       </div>
     </section>
