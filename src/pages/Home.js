@@ -133,7 +133,7 @@ export default function Home() {
 
           {/* Bottom Hero Element: Interactive Developer Workspace Visual */}
           <motion.div
-            style={{ marginTop: '48px' }}
+            className="hero-dashboard-wrap"
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, delay: 0.2, ease: [0.2, 0.8, 0.2, 1] }}
@@ -144,9 +144,9 @@ export default function Home() {
       </section>
 
       {/* ─── Animated Key Stats Section ────────────── */}
-      <section style={{ padding: '30px 0', borderTop: '1px solid var(--border-color)', borderBottom: '1px solid var(--border-color)', background: 'var(--bg-card)' }}>
+      <section className="home-stats-section">
         <div className="container">
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '20px', textAlign: 'center' }}>
+          <div className="home-stats-grid">
             <motion.div initial={{ opacity: 0, y: 15 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.4 }}>
               <div style={{ fontSize: '36px', fontWeight: '800', color: 'var(--accent-cyan)' }}>
                 <CounterUp end={2} suffix="+" />
@@ -187,7 +187,7 @@ export default function Home() {
       </section>
 
       {/* ─── Quick Navigation Cards Section ──────────── */}
-      <section className="section-padding" style={{ paddingTop: '40px' }}>
+      <section className="section-padding home-explore-section">
         <div className="container">
           <div className="wpo-section-title text-center">
             <span className="section-tag"><i className="fas fa-compass"></i> Explore Portfolio</span>
@@ -197,7 +197,7 @@ export default function Home() {
             </p>
           </div>
 
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))', gap: '24px' }}>
+          <div className="explore-grid">
             {pageCards.map((card, idx) => (
               <motion.div
                 key={card.title}

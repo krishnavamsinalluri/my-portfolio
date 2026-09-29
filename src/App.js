@@ -1,4 +1,5 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { MotionConfig } from 'framer-motion';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 import ScrollToTop from './components/ScrollToTop';
@@ -13,25 +14,27 @@ import Contact from './pages/Contact';
 
 function App() {
   return (
-    <BrowserRouter>
-      <ScrollToTop />
-      <div className="app-wrapper">
-        <Navbar />
-        <main className="app-main">
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/about" element={<About />} />
-            <Route path="/expertise" element={<Expertise />} />
-            <Route path="/skills" element={<Skills />} />
-            <Route path="/experience" element={<Experience />} />
-            <Route path="/projects" element={<Projects />} />
-            <Route path="/education" element={<Education />} />
-            <Route path="/contact" element={<Contact />} />
-          </Routes>
-        </main>
-        <Footer />
-      </div>
-    </BrowserRouter>
+    <MotionConfig reducedMotion="user">
+      <BrowserRouter>
+        <ScrollToTop />
+        <div className="app-wrapper">
+          <Navbar />
+          <main className="app-main">
+            <Routes>
+              <Route path="/" element={<Home />} />
+              <Route path="/about" element={<About />} />
+              <Route path="/expertise" element={<Expertise />} />
+              <Route path="/skills" element={<Skills />} />
+              <Route path="/experience" element={<Experience />} />
+              <Route path="/projects" element={<Projects />} />
+              <Route path="/education" element={<Education />} />
+              <Route path="/contact" element={<Contact />} />
+            </Routes>
+          </main>
+          <Footer />
+        </div>
+      </BrowserRouter>
+    </MotionConfig>
   );
 }
 

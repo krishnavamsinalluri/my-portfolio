@@ -51,7 +51,7 @@ export default function Expertise() {
           </p>
         </div>
 
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(320px, 1fr))', gap: '24px' }}>
+        <div className="expertise-grid">
           {expertiseItems.map((item, idx) => (
             <motion.div
               key={item.title}
