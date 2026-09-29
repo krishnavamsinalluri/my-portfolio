@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import CounterUp from './CounterUp';
 
 export default function HeroDashboard() {
   const [activeTab, setActiveTab] = useState('developer');
@@ -176,19 +177,19 @@ export default function HeroDashboard() {
             >
               <div className="dashboard-metrics-grid">
                 <div className="metric-card">
-                  <h3>2+ Years</h3>
+                  <h3><CounterUp end={2} suffix="+" /> Years</h3>
                   <p>Software Engineering Exp @ SNAD Developers</p>
                 </div>
                 <div className="metric-card">
-                  <h3>5+ Major</h3>
+                  <h3><CounterUp end={5} suffix="+" /> Major</h3>
                   <p>Deployed Enterprise & Web Projects</p>
                 </div>
                 <div className="metric-card">
-                  <h3>15+ Skills</h3>
+                  <h3><CounterUp end={15} suffix="+" /> Skills</h3>
                   <p>Frontend, APIs & AI-Assisted Tooling</p>
                 </div>
                 <div className="metric-card">
-                  <h3>100%</h3>
+                  <h3><CounterUp end={100} suffix="%" /></h3>
                   <p>Responsive & Pixel-Perfect Delivery</p>
                 </div>
               </div>
@@ -205,7 +206,7 @@ export default function HeroDashboard() {
                 fontSize: '13px'
               }}>
                 <span style={{ color: '#34d399', fontWeight: '600' }}>⚡ Lighthouse Score</span>
-                <span style={{ fontFamily: 'Fira Code, monospace', color: '#ffffff' }}>Performance: 98/100</span>
+                <span style={{ fontFamily: 'Fira Code, monospace', color: '#ffffff' }}>Performance: <CounterUp end={98} suffix="/100" /></span>
               </div>
             </motion.div>
           )}

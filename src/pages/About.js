@@ -1,5 +1,6 @@
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
+import CounterUp from '../components/CounterUp';
 
 export default function About() {
   const infoList = [
@@ -36,7 +37,7 @@ export default function About() {
               <div className="about-image-overlay"></div>
             </div>
             <div className="about-experience-badge">
-              <h3>2+</h3>
+              <h3><CounterUp end={2} suffix="+" /></h3>
               <p>Years Experience<br /><span style={{ color: 'var(--accent-violet)' }}>Software Engineering</span></p>
             </div>
           </motion.div>

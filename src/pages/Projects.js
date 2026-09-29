@@ -1,8 +1,10 @@
-import { motion } from 'framer-motion';
+import { useState } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 
 const caseStudies = [
   {
     id: 'hrms',
+    type: 'applications',
     title: 'HR Management System (HRMS)',
     period: 'Sept 2024 – Jan 2025',
     category: 'Enterprise SaaS Application',
@@ -20,6 +22,7 @@ const caseStudies = [
   },
   {
     id: 'valam',
+    type: 'applications',
     title: 'Valam — Ride-Hailing Platform',
     period: 'Feb 2025 – Present',
     category: 'On-Demand Mobility System',
@@ -37,6 +40,7 @@ const caseStudies = [
   },
   {
     id: 'rightlyhr',
+    type: 'websites',
     title: 'RightlyHR — Product Website',
     period: 'Production Deployment',
     category: 'Product Landing & Platform Website',
@@ -55,6 +59,7 @@ const caseStudies = [
   },
   {
     id: 'sirisampada',
+    type: 'websites',
     title: 'Sirisampada Infratech — Corporate Website',
     period: 'Production Deployment',
     category: 'Corporate Real Estate Website',
@@ -73,6 +78,7 @@ const caseStudies = [
   },
   {
     id: 'ecommerce',
+    type: 'e-commerce',
     title: 'Shopping E-Commerce Application',
     period: 'Jan 2024 – Mar 2024',
     category: 'E-Commerce Frontend App',
@@ -90,7 +96,25 @@ const caseStudies = [
   }
 ];
 
+const filterTabs = [
+  { key: 'all', label: 'All Projects', icon: 'fas fa-th-large' },
+  { key: 'applications', label: 'Applications & SaaS', icon: 'fas fa-laptop-code' },
+  { key: 'websites', label: 'Websites & Portals', icon: 'fas fa-globe' },
+  { key: 'e-commerce', label: 'E-Commerce', icon: 'fas fa-shopping-cart' },
+];
+
 export default function Projects() {
+  const [activeFilter, setActiveFilter] = useState('all');
+
+  const filteredProjects = activeFilter === 'all'
+    ? caseStudies
+    : caseStudies.filter(p => p.type === activeFilter);
+
+  const getCount = (key) => {
+    if (key === 'all') return caseStudies.length;
+    return caseStudies.filter(p => p.type === key).length;
+  };
+
   return (
     <section className="wpo-portfolio-section section-padding" id="projects">
       <div className="container">
@@ -102,120 +126,148 @@ export default function Projects() {
           </p>
         </div>
 
-        <div className="projects-grid">
-          {caseStudies.map((project, index) => (
-            <motion.div
-              key={project.id}
-              className="case-study-card"
-              initial={{ opacity: 0, y: 35 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: '-50px' }}
-              transition={{ duration: 0.6, delay: index * 0.1 }}
-            >
-              {/* Visual preview column with Browser Mockup Frame */}
-              <div className="case-study-visual">
-                <div className="browser-mockup-frame">
-                  <div className="browser-header">
-                    <div className="window-dots">
-                      <span className="dot dot-red"></span>
-                      <span className="dot dot-yellow"></span>
-                      <span className="dot dot-green"></span>
-                    </div>
-                    <div className="browser-address-bar">
-                      <i className="fas fa-lock" style={{ fontSize: '10px', color: '#10b981', marginRight: '6px' }}></i>
-                      {project.website ? project.website : `https://${project.id}.app.internal`}
-                    </div>
-                  </div>
-                  <div className="browser-screen">
-                    <img 
-                      src={project.img} 
-                      alt={project.title}
-                      onError={(e) => {
-                        e.target.onerror = null;
-                        e.target.style.display = 'none';
-                        e.target.parentNode.innerHTML = `
-                          <div style="
-                            width:100%; height:100%; min-height:220px;
-                            display:flex; flex-direction:column; align-items:center; justify-content:center;
-                            background: radial-gradient(circle at center, rgba(139,92,246,0.2) 0%, rgba(17,23,38,0.95) 100%);
-                            padding: 24px; text-align: center;
-                          ">
-                            <i class="${project.category.includes('Mobility') ? 'fas fa-car' : project.category.includes('Enterprise') ? 'fas fa-users-cog' : 'fas fa-globe'}" style="font-size: 44px; color: ${project.accent}; margin-bottom: 12px;"></i>
-                            <h4 style="font-size: 17px; color: #ffffff; margin-bottom: 6px;">${project.title}</h4>
-                            <span style="font-size: 12px; color: #94a3b8; font-family: 'Fira Code', monospace;">${project.tech.slice(0, 3).join(' · ')}</span>
-                          </div>
-                        `;
-                      }}
-                    />
-                  </div>
-                </div>
-              </div>
-
-              {/* Info & case breakdown column */}
-              <div className="case-study-info">
-                <div className="project-meta-row">
-                  <span className="project-category" style={{ color: project.accent }}>
-                    {project.category}
-                  </span>
-                  <span className="tech-tag-sm" style={{ borderColor: `${project.accent}40`, color: project.accent }}>
-                    {project.badge}
-                  </span>
-                </div>
-
-                <h3>{project.title}</h3>
-                <span className="project-period" style={{ display: 'block', marginBottom: '16px' }}>
-                  <i className="far fa-calendar-alt" style={{ marginRight: '6px' }}></i>{project.period}
-                </span>
-
-                <div className="case-study-block">
-                  <div className="case-study-block-title">Problem & Context</div>
-                  <p>{project.problem}</p>
-                </div>
-
-                <div className="case-study-block">
-                  <div className="case-study-block-title">Key Contributions</div>
-                  <ul className="project-bullets">
-                    {project.points.map((pt, pIdx) => (
-                      <li key={pIdx}>{pt}</li>
-                    ))}
-                  </ul>
-                </div>
-
-                <div className="project-tech-tags">
-                  {project.tech.map((t) => (
-                    <span key={t} className="tech-tag-sm">
-                      {t}
-                    </span>
-                  ))}
-                </div>
-
-                <div className="project-actions">
-                  {project.website && (
-                    <a
-                      href={project.website}
-                      target="_blank"
-                      rel="noreferrer"
-                      className="btn-outline"
-                      style={{ padding: '10px 20px', fontSize: '13px' }}
-                    >
-                      <i className="fas fa-external-link-alt"></i> Visit Live Website
-                    </a>
-                  )}
-                  <a 
-                    href="https://github.com/krishnavamsinalluri" 
-                    target="_blank" 
-                    rel="noreferrer"
-                    className="social-link"
-                    title="View GitHub Repository"
-                    style={{ width: '38px', height: '38px', fontSize: '16px' }}
-                  >
-                    <i className="fab fa-github"></i>
-                  </a>
-                </div>
-              </div>
-            </motion.div>
-          ))}
+        {/* ─── Category Filter Tabs ─────────────────── */}
+        <div className="project-filter-tabs">
+          {filterTabs.map((tab) => {
+            const isActive = activeFilter === tab.key;
+            const count = getCount(tab.key);
+            return (
+              <button
+                key={tab.key}
+                className={`project-filter-btn ${isActive ? 'active' : ''}`}
+                onClick={() => setActiveFilter(tab.key)}
+              >
+                <i className={tab.icon}></i>
+                <span>{tab.label}</span>
+                <span className="filter-count-badge">{count}</span>
+              </button>
+            );
+          })}
         </div>
+
+        {/* ─── Filtered Projects Grid ───────────────── */}
+        <AnimatePresence mode="wait">
+          <motion.div
+            key={activeFilter}
+            initial={{ opacity: 0, y: 15 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -15 }}
+            transition={{ duration: 0.3 }}
+            className="projects-grid"
+          >
+            {filteredProjects.map((project, index) => (
+              <motion.div
+                key={project.id}
+                className="case-study-card"
+                initial={{ opacity: 0, y: 25 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.4, delay: index * 0.08 }}
+              >
+                {/* Visual preview column with Browser Mockup Frame */}
+                <div className="case-study-visual">
+                  <div className="browser-mockup-frame">
+                    <div className="browser-header">
+                      <div className="window-dots">
+                        <span className="dot dot-red"></span>
+                        <span className="dot dot-yellow"></span>
+                        <span className="dot dot-green"></span>
+                      </div>
+                      <div className="browser-address-bar">
+                        <i className="fas fa-lock" style={{ fontSize: '10px', color: '#10b981', marginRight: '6px' }}></i>
+                        {project.website ? project.website : `https://${project.id}.app.internal`}
+                      </div>
+                    </div>
+                    <div className="browser-screen">
+                      <img 
+                        src={project.img} 
+                        alt={project.title}
+                        onError={(e) => {
+                          e.target.onerror = null;
+                          e.target.style.display = 'none';
+                          e.target.parentNode.innerHTML = `
+                            <div style="
+                              width:100%; height:100%; min-height:220px;
+                              display:flex; flex-direction:column; align-items:center; justify-content:center;
+                              background: radial-gradient(circle at center, rgba(139,92,246,0.2) 0%, rgba(17,23,38,0.95) 100%);
+                              padding: 24px; text-align: center;
+                            ">
+                              <i class="${project.category.includes('Mobility') ? 'fas fa-car' : project.category.includes('Enterprise') ? 'fas fa-users-cog' : 'fas fa-globe'}" style="font-size: 44px; color: ${project.accent}; margin-bottom: 12px;"></i>
+                              <h4 style="font-size: 17px; color: #ffffff; margin-bottom: 6px;">${project.title}</h4>
+                              <span style="font-size: 12px; color: #94a3b8; font-family: 'Fira Code', monospace;">${project.tech.slice(0, 3).join(' · ')}</span>
+                            </div>
+                          `;
+                        }}
+                      />
+                    </div>
+                  </div>
+                </div>
+
+                {/* Info & case breakdown column */}
+                <div className="case-study-info">
+                  <div className="project-meta-row">
+                    <span className="project-category" style={{ color: project.accent }}>
+                      {project.category}
+                    </span>
+                    <span className="tech-tag-sm" style={{ borderColor: `${project.accent}40`, color: project.accent }}>
+                      {project.badge}
+                    </span>
+                  </div>
+
+                  <h3>{project.title}</h3>
+                  <span className="project-period" style={{ display: 'block', marginBottom: '16px' }}>
+                    <i className="far fa-calendar-alt" style={{ marginRight: '6px' }}></i>{project.period}
+                  </span>
+
+                  <div className="case-study-block">
+                    <div className="case-study-block-title">Problem & Context</div>
+                    <p>{project.problem}</p>
+                  </div>
+
+                  <div className="case-study-block">
+                    <div className="case-study-block-title">Key Contributions</div>
+                    <ul className="project-bullets">
+                      {project.points.map((pt, pIdx) => (
+                        <li key={pIdx}>{pt}</li>
+                      ))}
+                    </ul>
+                  </div>
+
+                  <div className="project-tech-tags">
+                    {project.tech.map((t) => (
+                      <span key={t} className="tech-tag-sm">
+                        {t}
+                      </span>
+                    ))}
+                  </div>
+
+                  <div className="project-actions">
+                    {project.website && (
+                      <a
+                        href={project.website}
+                        target="_blank"
+                        rel="noreferrer"
+                        className="btn-outline"
+                        style={{ padding: '10px 20px', fontSize: '13px' }}
+                      >
+                        <i className="fas fa-external-link-alt"></i> Visit Live Website
+                      </a>
+                    )}
+                    <a 
+                      href="https://github.com/krishnavamsinalluri" 
+                      target="_blank" 
+                      rel="noreferrer"
+                      className="social-link"
+                      title="View GitHub Repository"
+                      style={{ width: '38px', height: '38px', fontSize: '16px' }}
+                    >
+                      <i className="fab fa-github"></i>
+                    </a>
+                  </div>
+                </div>
+              </motion.div>
+            ))}
+          </motion.div>
+        </AnimatePresence>
       </div>
     </section>
   );

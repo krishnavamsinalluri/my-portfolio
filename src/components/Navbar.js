@@ -15,6 +15,7 @@ const navItems = [
 export default function Navbar() {
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const [scrollProgress, setScrollProgress] = useState(0);
   const [theme, setTheme] = useState(() => {
     return localStorage.getItem('vamsi_portfolio_theme') || 'dark';
   });
@@ -31,8 +32,16 @@ export default function Navbar() {
       } else {
         setScrolled(false);
       }
+
+      const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+      const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+      if (height > 0) {
+        const scrolledPct = (winScroll / height) * 100;
+        setScrollProgress(Math.min(100, Math.max(0, scrolledPct)));
+      }
     };
-    window.addEventListener('scroll', handleScroll);
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
@@ -42,6 +51,22 @@ export default function Navbar() {
 
   return (
     <nav className={`navbar ${scrolled ? 'scrolled' : ''}`}>
+      {/* Scroll Progress Bar */}
+      <div 
+        className="nav-scroll-progress" 
+        style={{
+          position: 'absolute',
+          bottom: 0,
+          left: 0,
+          height: '3px',
+          width: `${scrollProgress}%`,
+          background: 'linear-gradient(90deg, #8b5cf6 0%, #06b6d4 50%, #10b981 100%)',
+          boxShadow: '0 0 10px rgba(6, 182, 212, 0.6)',
+          transition: 'width 0.1s linear',
+          pointerEvents: 'none'
+        }}
+      />
+
       <div className="container">
         <NavLink to="/" className="navbar-brand" onClick={() => setOpen(false)}>
           <div className="logo-badge">KV</div>

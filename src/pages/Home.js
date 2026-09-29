@@ -1,6 +1,7 @@
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import HeroDashboard from '../components/HeroDashboard';
+import CounterUp from '../components/CounterUp';
 
 export default function Home() {
   const pageCards = [
@@ -39,12 +40,34 @@ export default function Home() {
       {/* ─── Hero Section ─────────────────────────── */}
       <section className="hero-section" id="home">
         <div className="container">
+          {/* Top Hero Split Grid: Left Image, Right Text */}
           <div className="hero-grid">
-            {/* Left Column: Hero Text & Actions */}
+            {/* Left Column: Hero Image (vamsiwithpc.png) */}
             <motion.div
-              initial={{ opacity: 0, x: -40 }}
+              className="hero-image-column"
+              initial={{ opacity: 0, scale: 0.96 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.6, ease: [0.2, 0.8, 0.2, 1] }}
+            >
+              <div className="hero-image-card">
+                <div className="hero-image-wrapper">
+                  <img
+                    src="/assets/images/vamsiwithpc.png"
+                    alt="Krishna Vamsi working on laptop"
+                    onError={(e) => {
+                      e.target.src = '/assets/images/PROFILE-PHOTO.jpeg';
+                    }}
+                  />
+                </div>
+              </div>
+            </motion.div>
+
+            {/* Right Column: Hero Text & Actions */}
+            <motion.div
+              className="hero-content-column"
+              initial={{ opacity: 0, x: 40 }}
               animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.7, ease: [0.2, 0.8, 0.2, 1] }}
+              transition={{ duration: 0.7, delay: 0.1, ease: [0.2, 0.8, 0.2, 1] }}
             >
               <div className="hero-tag">
                 <span className="status-dot"></span>
@@ -106,15 +129,65 @@ export default function Home() {
                 </a>
               </div>
             </motion.div>
+          </div>
 
-            {/* Right Column: Interactive Dev Workspace Visual */}
+          {/* Bottom Hero Element: Interactive Developer Workspace Visual */}
+          <motion.div
+            style={{ marginTop: '48px' }}
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.7, delay: 0.2, ease: [0.2, 0.8, 0.2, 1] }}
+          >
             <HeroDashboard />
+          </motion.div>
+        </div>
+      </section>
+
+      {/* ─── Animated Key Stats Section ────────────── */}
+      <section style={{ padding: '30px 0', borderTop: '1px solid var(--border-color)', borderBottom: '1px solid var(--border-color)', background: 'var(--bg-card)' }}>
+        <div className="container">
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '20px', textAlign: 'center' }}>
+            <motion.div initial={{ opacity: 0, y: 15 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.4 }}>
+              <div style={{ fontSize: '36px', fontWeight: '800', color: 'var(--accent-cyan)' }}>
+                <CounterUp end={2} suffix="+" />
+              </div>
+              <div style={{ fontSize: '13px', color: 'var(--text-secondary)', fontWeight: '500', marginTop: '4px' }}>
+                Years Software Engineering
+              </div>
+            </motion.div>
+
+            <motion.div initial={{ opacity: 0, y: 15 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.4, delay: 0.1 }}>
+              <div style={{ fontSize: '36px', fontWeight: '800', color: 'var(--accent-violet)' }}>
+                <CounterUp end={5} suffix="+" />
+              </div>
+              <div style={{ fontSize: '13px', color: 'var(--text-secondary)', fontWeight: '500', marginTop: '4px' }}>
+                Deployed Major Projects
+              </div>
+            </motion.div>
+
+            <motion.div initial={{ opacity: 0, y: 15 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.4, delay: 0.2 }}>
+              <div style={{ fontSize: '36px', fontWeight: '800', color: '#10b981' }}>
+                <CounterUp end={15} suffix="+" />
+              </div>
+              <div style={{ fontSize: '13px', color: 'var(--text-secondary)', fontWeight: '500', marginTop: '4px' }}>
+                Tech Skills & Tools
+              </div>
+            </motion.div>
+
+            <motion.div initial={{ opacity: 0, y: 15 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.4, delay: 0.3 }}>
+              <div style={{ fontSize: '36px', fontWeight: '800', color: '#ec4899' }}>
+                <CounterUp end={100} suffix="%" />
+              </div>
+              <div style={{ fontSize: '13px', color: 'var(--text-secondary)', fontWeight: '500', marginTop: '4px' }}>
+                Pixel-Perfect & Responsive
+              </div>
+            </motion.div>
           </div>
         </div>
       </section>
 
       {/* ─── Quick Navigation Cards Section ──────────── */}
-      <section className="section-padding" style={{ paddingTop: '20px' }}>
+      <section className="section-padding" style={{ paddingTop: '40px' }}>
         <div className="container">
           <div className="wpo-section-title text-center">
             <span className="section-tag"><i className="fas fa-compass"></i> Explore Portfolio</span>
@@ -124,7 +197,7 @@ export default function Home() {
             </p>
           </div>
 
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(260px, 1fr))', gap: '24px' }}>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))', gap: '24px' }}>
             {pageCards.map((card, idx) => (
               <motion.div
                 key={card.title}
@@ -132,18 +205,19 @@ export default function Home() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.4, delay: idx * 0.1 }}
+                style={{ height: '100%' }}
               >
-                <Link to={card.path} className="skill-category-card" style={{ display: 'block', height: '100%' }}>
+                <Link to={card.path} className="skill-category-card" style={{ display: 'flex', flexDirection: 'column', height: '100%' }}>
                   <div className="skill-category-header">
                     <div className="skill-category-icon" style={{ background: `${card.color}20`, color: card.color }}>
                       <i className={card.icon}></i>
                     </div>
                     <h3>{card.title}</h3>
                   </div>
-                  <p style={{ fontSize: '14px', color: 'var(--text-secondary)', lineHeight: '1.6', marginBottom: '16px' }}>
+                  <p style={{ fontSize: '14px', color: 'var(--text-secondary)', lineHeight: '1.6', marginBottom: '20px', flex: 1 }}>
                     {card.desc}
                   </p>
-                  <span style={{ fontSize: '13px', fontWeight: '600', color: card.color, display: 'inline-flex', alignItems: 'center', gap: '6px' }}>
+                  <span style={{ fontSize: '13px', fontWeight: '600', color: card.color, display: 'inline-flex', alignItems: 'center', gap: '6px', marginTop: 'auto' }}>
                     View {card.title} <i className="fas fa-arrow-right" style={{ fontSize: '11px' }}></i>
                   </span>
                 </Link>
